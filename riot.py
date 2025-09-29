@@ -99,11 +99,18 @@ def load_rune_data():
 
 
 def getrune_url(primary_keystone_id, secondary_tree_id):
+    primary_rune_data = KEYSTONES_BY_ID.get(primary_keystone_id)
+    secondary_tree_data = TREES_BY_ID.get(secondary_tree_id)
+    primary_url = None
+    secondary_url = None
+    if primary_rune_data:
+        primary_icon = primary_rune_data['icon']
+        primary_url = f"{BASE_IMG_URL}/{primary_icon}"
     
-    primary_icon = KEYSTONES_BY_ID[primary_keystone_id]['icon']
-    secondary_icon = TREES_BY_ID[secondary_tree_id]['icon']
-    primary_url = f"{BASE_IMG_URL}/{primary_icon}"
-    secondary_url = f"{BASE_IMG_URL}/{secondary_icon}"
+    if secondary_tree_data:
+        secondary_icon = secondary_tree_data['icon']
+        secondary_url = f"{BASE_IMG_URL}/{secondary_icon}"
+
     return primary_url, secondary_url
 
 def get_champion_image_url(champion_name):
@@ -131,20 +138,20 @@ def get_item_image_url(items):
             itemurls.append(item_url)
     return itemurls
 
+QUEUE_ID_MAP = {
+    400: "Normal Draft",
+    420: "Ranked Solo/Duo",
+    430: "Normal Blind",
+    440: "Ranked Flex",
+    450: "ARAM",
+    490: "Quick Play",
+    1700: "Arena"
+}
+
 def get_match_info(matchdata):
-    mode=matchdata["info"]["gameMode"]
-    if mode.upper()=="CLASSIC":
-        type=matchdata["info"]["queueId"]
-        if type==420:
-            mode="RANKED SOLO/DUO"
-        elif type==440:
-            mode="RANKED FLEX"
-        elif type==400:
-            mode="NORMAL DRAFT"
-        elif type==430:
-            mode="NORMAL BLIND"
-        elif type==490:
-            mode="QUICK PLAY"
+    queueid=matchdata["info"]["queueId"]
+    mode = QUEUE_ID_MAP.get(queueid).upper()
+    print(mode)
     gameduration=matchdata["info"]["gameDuration"]
     minute,second=divmod(gameduration,60)
     duration=str(minute)+"m "+str(second)+"s"

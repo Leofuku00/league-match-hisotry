@@ -88,7 +88,7 @@
                                 <span class="text-sm font-bold text-gray-600">{{ match.match_info.duration }}</span>
                             </div>
                         </div>
-                        
+                        {% if match.match_info.mode and match.match_info.mode != "ARENA" %}
                         <div class="flex flex-col space-y-1.5">
                             <img src="{{ match.summoner_match_info.ss1url | default('https://placehold.co/40x40/9ca3af/FFF?text=S1', true) }}" alt="Summoner Spell 1" class="w-10 h-10 rounded-md border border-gray-400">
                             <img src="{{ match.summoner_match_info.ss2url | default('https://placehold.co/40x40/9ca3af/FFF?text=S2', true) }}" alt="Summoner Spell 2" class="w-10 h-10 rounded-md border border-gray-400">
@@ -98,6 +98,7 @@
                             <img src="{{ match.summoner_match_info.keystone_url | default('https://placehold.co/40x40/9ca3af/FFF?text=K1', true) }}" alt="Keystone" class="w-10 h-10 rounded-md border border-gray-400">
                             <img src="{{ match.summoner_match_info.secondary_keystone_url | default('https://placehold.co/40x40/9ca3af/FFF?text=K2', true) }}" alt="Secondary Keystone" class="w-10 h-10 rounded-md border border-gray-400">
                         </div>
+                        {% endif %}
                     </div>
 
                     <div class="flex-grow flex items-center justify-start space-x-1.5">
