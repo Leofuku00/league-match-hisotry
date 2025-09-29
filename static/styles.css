@@ -1,0 +1,78 @@
+/* --- General Page & Container Styling --- */
+
+/* Style for the main page body */
+body {
+    background-color: #f0f2f5; /* Light gray background */
+    color: #333; /* Dark gray text for high contrast */
+}
+
+/* Base style for the main card container */
+.summoner-card {
+    background-color: #ffffff; /* White card background */
+    border-radius: 0.5rem; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem; /* Padding inside the card */
+}
+
+/* --- Champion & KDA Section --- */
+
+.champion-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Space between elements */
+}
+
+.champion-image {
+    width: 4rem; /* 64px */
+    height: 4rem; /* 64px */
+    border-radius: 9999px; /* Fully rounded for a circle */
+    border-width: 2px;
+    border-color: #ddd; /* A subtle gray border */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.kda-text {
+    font-size: 1.25rem; /* 20px */
+    font-weight: 700;
+    color: #333; /* Dark text for high contrast */
+}
+
+.kda-ratio {
+    font-size: 0.875rem; /* 14px */
+    color: #888; /* A soft gray for the ratio text */
+}
+
+/* --- Items Section --- */
+
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 0.375rem; /* 6px */
+}
+
+.item-image {
+    width: 2.5rem; /* 40px */
+    height: 2.5rem; /* 40px */
+    border-radius: 0.25rem; /* Small rounded corners */
+    border-width: 1px;
+    border-color: #ccc;
+}
+
+/* Styling for a blank item slot */
+.blank-item-image {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: #eee; /* A lighter background to represent an empty slot */
+    border-radius: 0.25rem;
+    border-width: 1px;
+    border-color: #ccc;
+}
+
+/* --- Player List Section --- */
+
+.player-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem; /* Space between columns */
+}

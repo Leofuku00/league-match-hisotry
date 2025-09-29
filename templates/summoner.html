@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Summoner Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .blank-item-image { background-color: #9ca3af; border-radius: 0.25rem; }
+        .item-image { border-radius: 0.25rem; }
+        .level-bg {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-weight: bold;
+            padding: 0px 4px; 
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            line-height: 1; 
+            white-space: nowrap; 
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 p-4">
+
+    <div class="mb-6 flex items-center space-x-4 bg-gray-800 p-4 rounded-lg shadow-lg">
+        
+        <div class="relative w-24 h-24 flex-shrink-0">
+            <img src="{{ icon_url | default('https://placehold.co/96x96/4b5563/FFF?text=Icon', true) }}" alt="Summoner Icon" class="w-full h-full rounded-lg object-cover border-2 border-gray-500">
+            <span class="absolute bottom-0 right-0 px-2 py-1 bg-gray-900 bg-opacity-75 text-white text-xs font-bold rounded-tl-lg">
+                {{ all_data[0]["summoner_match_info"]["summoner_level"] | default('1', true) }}
+            </span>
+        </div>
+        
+        <div class="flex items-baseline">
+            <span class="text-4xl font-bold text-gray-100 mr-2">{{ username }}</span>
+            <span class="text-2xl font-bold text-gray-400">#{{ tag }}</span>
+        </div>
+        
+        <div class="flex items-center space-x-2">
+            {% if tier and tier != 'UNRANKED' %}
+            <img src="{{ tierurl }}" alt="Ranked Tier Emblem" class="w-20 h-20">
+            <span class="text-xl font-semibold text-gray-300">
+                {{ tier }} {{ division }} - {{ lp }} LP
+            </span>
+            {% else %}
+            <span class="text-xl font-semibold text-gray-300">Unranked</span>
+            {% endif %}
+        </div>
+
+    </div>
+    
+    <div class="flex flex-col items-center space-y-3">
+
+        {% for match in all_data %}
+            <div class="
+                {% if match.summoner_match_info.result == 'Defeat' %}
+                    bg-red-200
+                {% elif match.summoner_match_info.result == 'Victory' %}
+                    bg-blue-200
+                {% elif match.summoner_match_info.result == 'Remake' %}
+                    bg-gray-300
+                {% else %}
+                    bg-gray-200
+                {% endif %}
+                text-gray-900 rounded-lg shadow-xl p-4 w-full max-w-5xl">
+
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-lg font-bold text-gray-900">{{ match.match_info.mode }}</span>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    
+                    <div class="flex-none flex items-center space-x-4">
+                        
+                        <div class="flex flex-col items-center space-y-2">
+                            <div class="flex items-center space-x-4">
+                                <div class="relative w-16 h-16">
+                                    <img src="{{ match.summoner_match_info.playerchamp_url | default('https://placehold.co/64x64/9ca3af/FFF?text=Champ', true) }}" alt="Champion Image" class="w-full h-full rounded-full border-2 border-gray-400 shadow-md">
+                                    <span class="absolute -bottom-1 -right-1 level-bg px-1 py-0.5 text-xs rounded-sm">{{ match.summoner_match_info.level | default('1', true) }}</span>
+                                </div>
+                                
+                                <div class="flex flex-col">
+                                    <span class="text-lg font-bold text-gray-900">{{ match.summoner_match_info.kda | default('0/0/0', true) }}</span>
+                                    <span class="text-gray-600 text-xs">{{ match.summoner_match_info.kdadec | default('0.00', true) }}:1 KDA</span>
+                                    <span class="text-gray-600 font-bold text-sm">{{ match.summoner_match_info.result }}</span>
+                                 </div>
+                            </div>
+                            <div>
+                                <span class="text-sm font-bold text-gray-600">{{ match.match_info.duration }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-col space-y-1.5">
+                            <img src="{{ match.summoner_match_info.ss1url | default('https://placehold.co/40x40/9ca3af/FFF?text=S1', true) }}" alt="Summoner Spell 1" class="w-10 h-10 rounded-md border border-gray-400">
+                            <img src="{{ match.summoner_match_info.ss2url | default('https://placehold.co/40x40/9ca3af/FFF?text=S2', true) }}" alt="Summoner Spell 2" class="w-10 h-10 rounded-md border border-gray-400">
+                        </div>
+                        
+                        <div class="flex flex-col space-y-1.5">
+                            <img src="{{ match.summoner_match_info.keystone_url | default('https://placehold.co/40x40/9ca3af/FFF?text=K1', true) }}" alt="Keystone" class="w-10 h-10 rounded-md border border-gray-400">
+                            <img src="{{ match.summoner_match_info.secondary_keystone_url | default('https://placehold.co/40x40/9ca3af/FFF?text=K2', true) }}" alt="Secondary Keystone" class="w-10 h-10 rounded-md border border-gray-400">
+                        </div>
+                    </div>
+
+                    <div class="flex-grow flex items-center justify-start space-x-1.5">
+                        <div class="grid grid-cols-3 grid-rows-2 gap-1.5">
+                            {% for i in range(6) %}{% if match.summoner_match_info.item_urls[i] %}<img src="{{ match.summoner_match_info.item_urls[i] }}" alt="Item Image" class="w-10 h-10 item-image">{% else %}<div class="w-10 h-10 blank-item-image"></div>{% endif %}{% endfor %}
+                        </div>
+                        <div>
+                            {% if match.summoner_match_info.item_urls[6] %}<img src="{{ match.summoner_match_info.item_urls[6] }}" alt="Trinket" class="w-10 h-10 item-image">{% else %}<div class="w-10 h-10 blank-item-image"></div>{% endif %}
+                        </div>
+                    </div>
+
+                    <div class="flex-none flex-shrink-0 w-96">
+                        <div class="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                            {% for player in match["playernames"] %}
+                                {% set parts = player.split('#') %}
+                                {% set gameName = parts[0] %}
+                                {% set tagLine = parts[1] %}
+                                <div class="flex items-center space-x-2">
+                                    <img src="{{ match['player_dict'][player] }}" alt="Champ icon" class="w-6 h-6 item-image flex-shrink-0">
+                                    <a href="{{ url_for('summoner', username=gameName, tag=tagLine) }}" class="hover:underline text-sm text-gray-800 truncate" title="{{ gameName }}">
+                                        {{ gameName }}
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
