@@ -20,30 +20,38 @@
 </head>
 
 <body class="bg-gray-900 p-4">
+    <div class="mb-4">
+        <a href="{{ url_for('index') }}" class="inline-block bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-500 transition-colors duration-200">
+            &larr; New Search
+        </a>
+    </div>
 
     <div class="mb-6 flex items-center space-x-4 bg-gray-800 p-4 rounded-lg shadow-lg">
         
         <div class="relative w-24 h-24 flex-shrink-0">
             <img src="{{ icon_url | default('https://placehold.co/96x96/4b5563/FFF?text=Icon', true) }}" alt="Summoner Icon" class="w-full h-full rounded-lg object-cover border-2 border-gray-500">
+            
             <span class="absolute bottom-0 right-0 px-2 py-1 bg-gray-900 bg-opacity-75 text-white text-xs font-bold rounded-tl-lg">
                 {{ all_data[0]["summoner_match_info"]["summoner_level"] | default('1', true) }}
             </span>
         </div>
         
-        <div class="flex items-baseline">
-            <span class="text-4xl font-bold text-gray-100 mr-2">{{ username }}</span>
-            <span class="text-2xl font-bold text-gray-400">#{{ tag }}</span>
-        </div>
-        
-        <div class="flex items-center space-x-2">
-            {% if tier and tier != 'UNRANKED' %}
-            <img src="{{ tierurl }}" alt="Ranked Tier Emblem" class="w-20 h-20">
-            <span class="text-xl font-semibold text-gray-300">
-                {{ tier }} {{ division }} - {{ lp }} LP
-            </span>
-            {% else %}
-            <span class="text-xl font-semibold text-gray-300">Unranked</span>
-            {% endif %}
+        <div class="flex items-center justify-between flex-grow">
+            <div class="flex items-baseline">
+                <span class="text-4xl font-bold text-gray-100 mr-2">{{ username }}</span>
+                <span class="text-2xl font-bold text-gray-400">#{{ tag }}</span>
+            </div>
+            
+            <div class="flex items-center space-x-2">
+                {% if tier and tier != 'UNRANKED' %}
+                <img src="{{ tierurl }}" alt="Ranked Tier Emblem" class="w-20 h-20">
+                <span class="text-xl font-semibold text-gray-300">
+                    {{ tier }} {{ division }} - {{ lp }} LP
+                </span>
+                {% else %}
+                <span class="text-xl font-semibold text-gray-300">Unranked</span>
+                {% endif %}
+            </div>
         </div>
 
     </div>
@@ -89,11 +97,12 @@
                             </div>
                         </div>
                         
+                        {% if match.match_info.mode | upper != 'ARENA' %}
                         <div class="flex flex-col space-y-1.5">
                             <img src="{{ match.summoner_match_info.ss1url | default('https://placehold.co/40x40/9ca3af/FFF?text=S1', true) }}" alt="Summoner Spell 1" class="w-10 h-10 rounded-md border border-gray-400">
                             <img src="{{ match.summoner_match_info.ss2url | default('https://placehold.co/40x40/9ca3af/FFF?text=S2', true) }}" alt="Summoner Spell 2" class="w-10 h-10 rounded-md border border-gray-400">
                         </div>
-                        {% if match.match_info.mode and match.match_info.mode != "ARENA" %}
+                        
                         <div class="flex flex-col space-y-1.5">
                             <img src="{{ match.summoner_match_info.keystone_url | default('https://placehold.co/40x40/9ca3af/FFF?text=K1', true) }}" alt="Keystone" class="w-10 h-10 rounded-md border border-gray-400">
                             <img src="{{ match.summoner_match_info.secondary_keystone_url | default('https://placehold.co/40x40/9ca3af/FFF?text=K2', true) }}" alt="Secondary Keystone" class="w-10 h-10 rounded-md border border-gray-400">
