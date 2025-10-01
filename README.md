@@ -1,4 +1,4 @@
-# league-match-hisotry
+# league-match-history
 Simplized version of famous league website to view match history
 
 Enter developer mode and run:
