@@ -8,7 +8,7 @@ View demo at: https://youtu.be/8K0K1ZI8amg
 
 OR run by following the steps below
 
-First obtain riot api key from https://developer.riotgames.com/apis, and go into app.py and insert riot api key.
+First obtain riot api key from https://developer.riotgames.com, and go into app.py and insert riot api key.
 
 Enter developer mode and run:
 
