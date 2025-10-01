@@ -5,7 +5,7 @@ app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
-api_key = "RGAPI-feaaebb2-273e-4b45-b6b4-9476519b1c97" 
+api_key = "" ##ENTER API KEY HERE
 
 riot.load_rune_data()
 
